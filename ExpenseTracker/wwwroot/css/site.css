@@ -121,11 +121,6 @@ body {
 }
 
 
-
-
-
-
-
 .e-btn-group.custom-rbt-group{
     width: 100%;
 
@@ -150,7 +145,7 @@ body {
     border-radius: 1rem;
     background-color: #1a222b;
 }
-    .widget.summary > div:first-child {
+ .widget.summary > div:first-child {
         background-color: #222b33;
         padding: 1rem;
         border-top-left-radius: 1rem;

@@ -25,21 +25,17 @@ namespace ExpenseTracker.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        
-
-        // GET: Transaction/Create
-        public IActionResult AddOrEdit(int id=0)
+        // GET: Transaction/AddOrEdit
+        public IActionResult AddOrEdit(int id = 0)
         {
             PopulateCategories();
             if (id == 0)
-            {
                 return View(new Transaction());
-            }
+            else
                 return View(_context.Transactions.Find(id));
-
         }
 
-        // POST: Transaction/Create
+        // POST: Transaction/AddOrEdit
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -48,10 +44,9 @@ namespace ExpenseTracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(transaction.TransactionId == 0)
-                {
+                if (transaction.TransactionId == 0)
                     _context.Add(transaction);
-                }else
+                else
                     _context.Update(transaction);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -60,12 +55,15 @@ namespace ExpenseTracker.Controllers
             return View(transaction);
         }
 
-
         // POST: Transaction/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (_context.Transactions == null)
+            {
+                return Problem("Entity set 'ApplicationDbContext.Transactions'  is null.");
+            }
             var transaction = await _context.Transactions.FindAsync(id);
             if (transaction != null)
             {
@@ -80,14 +78,10 @@ namespace ExpenseTracker.Controllers
         [NonAction]
         public void PopulateCategories()
         {
-            var categoryCollection = _context.Categories.ToList();
-            Category DefaultCategory = new Category()
-            {
-                CategoryId = 0,
-                Title = "Choose a category"
-            };
-            categoryCollection.Insert(0,DefaultCategory);
-            ViewBag.Categories = categoryCollection;
+            var CategoryCollection = _context.Categories.ToList();
+            Category DefaultCategory = new Category() { CategoryId = 0, Title = "Choose a Category" };
+            CategoryCollection.Insert(0, DefaultCategory);
+            ViewBag.Categories = CategoryCollection;
         }
     }
 }

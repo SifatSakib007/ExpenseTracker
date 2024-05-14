@@ -22,15 +22,18 @@ html {
     font-family: "Inter";
 }
 body {
-  margin-bottom: 60px;
-  background-color: #12161d;
-  color: #fff;
+    margin-bottom: 60px;
+    background-color: #12161d;
+    color: #fff;
+    overflow: hidden;
 }
 .e-bigger {
     font-size: x-large;
 }
-.main-content{
+.main-content {
     margin-left: 290px;
+    overflow-y: auto;
+    height: 92vh;
 }
 /*Menu*/
 #menu {
